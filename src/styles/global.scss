@@ -1,0 +1,60 @@
+@font-face {
+	font-family: Neue Machina;
+	src: url(../utils/NeueMachina-Light.otf);
+	font-weight: lighter;
+}
+
+* {
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+}
+
+:root {
+	--black: #000;
+	--white: #fff;
+	--line: #f2f2f2;
+	--shadow: #dddfde;
+
+	--primary-color: #00718a;
+	--secondary-color: #e6e6e7;
+	--tertiary-color: #f5f5f5;
+	--quaternary-color: #f9f9f9;
+
+	--primary-icon-color: #65676b;
+	--secondary-icon-color: #8c939d;
+
+	--primary-text-color: #242424;
+	--secondary-text-color: #424242;
+	--tertiary-text-color: #616161;
+	--quaternary-text-color: #0683f9;
+}
+
+body {
+	background-color: var(--quaternary-color);
+}
+
+body,
+input,
+button,
+textarea {
+	font: 400 1rem 'PT Sans', sans-serif;
+}
+
+@media (max-width: 1024px) {
+	html {
+		font-size: 93.75%;
+	}
+}
+
+@media (max-width: 768px) {
+	html {
+		font-size: 87.5%;
+	}
+}
+
+@media (max-width: 425px) {
+	html {
+		font-size: 81.25%;
+	}
+}
