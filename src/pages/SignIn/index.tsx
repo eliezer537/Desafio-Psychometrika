@@ -2,11 +2,13 @@ import { FormEvent, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { auth } from '../../services/firebase';
 
+import toast, { Toaster } from 'react-hot-toast';
+
 import logoImg from '../../assets/logo.svg';
 import eyeOffImg from '../../assets/eye-off.svg';
 
 import { useContext } from 'react';
-import { AuthContext } from '../../App';
+import { AuthContext } from '../../contexts/AuthContext';
 
 import Particles from 'react-particles-js';
 import './styles.scss';
@@ -25,18 +27,19 @@ export function SignIn() {
 	async function handleSignIn(event: FormEvent) {
 		event.preventDefault();
 
+		if (email.trim() === '' || password.trim() === '') {
+			return;
+		}
+
 		try {
 			const data = await auth.signInWithEmailAndPassword(email, password);
-
-			if (!data.user) {
-				return;
-			}
-			const { uid: id } = data.user;
+			const id = data.user?.uid;
 
 			setUser(id);
 			history.push('/admin/home');
 		} catch (err) {
-			throw 'User does not exists!';
+			toast.error('Ops, usuário não existe!', { icon: '❗️' });
+			return;
 		}
 	}
 
@@ -74,6 +77,7 @@ export function SignIn() {
 					},
 				}}
 			/>
+
 			<div className='box'>
 				<img src={logoImg} alt='Logo' />
 				<span>Desafio Trainee</span>
@@ -104,6 +108,7 @@ export function SignIn() {
 					<button type='submit'>Entrar</button>
 				</form>
 			</div>
+			<Toaster position='top-right' toastOptions={{ duration: 4000 }} />
 		</div>
 	);
 }
