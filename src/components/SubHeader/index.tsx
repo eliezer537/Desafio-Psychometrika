@@ -6,7 +6,7 @@ import './styles.scss';
 type HeaderProps = {
 	title: string;
 	hasBackIcon?: boolean;
-	goBackLink?: string | undefined;
+	goBackLink?: string;
 };
 
 export function SubHeader({
