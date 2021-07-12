@@ -7,17 +7,15 @@ import toast, { Toaster } from 'react-hot-toast';
 import logoImg from '../../assets/logo.svg';
 import eyeOffImg from '../../assets/eye-off.svg';
 
-import { useContext } from 'react';
-import { AuthContext } from '../../contexts/AuthContext';
-
 import Particles from 'react-particles-js';
 import './styles.scss';
+import { useAuth } from '../../hooks/useAuth';
 
 export function SignIn() {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [showPassword, setShowPassword] = useState(false);
-	const { setUser } = useContext(AuthContext);
+	const { setUser } = useAuth();
 	const history = useHistory();
 
 	function showOrHidePassword() {

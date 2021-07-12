@@ -1,3 +1,13 @@
+import { Header } from '../../components/Header';
+import { SubHeader } from '../../components/SubHeader';
+
+import './styles.scss';
+
 export function AdminHome() {
-	return <h1>Home Admin</h1>;
+	return (
+		<div className='admin-container'>
+			<Header initialLetter='A' />
+			<SubHeader title='Nome da Escola' />
+		</div>
+	);
 }
