@@ -10,7 +10,7 @@ header {
 	background-color: var(--white);
 	padding: 0 60px;
 	z-index: 5;
-	position: relative;
+	position: fixed;
 	box-shadow: 1px 0 4px 0px var(--shadow);
 
 	@extend .flex-vertical-align;
