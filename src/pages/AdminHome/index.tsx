@@ -11,7 +11,7 @@ export function AdminHome() {
 			<SubHeader title='Nome da Escola' />
 
 			<main>
-				<Grade />
+				<Grade isAdmin />
 			</main>
 		</div>
 	);
