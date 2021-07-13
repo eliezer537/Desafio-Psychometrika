@@ -12,11 +12,7 @@ export function AdminHome() {
 
 			<main>
 				<Grade />
-				<Grade />
-				<Grade />
 			</main>
 		</div>
 	);
 }
-
-// ######## FAZER AS PROPS DO GRADE ##########

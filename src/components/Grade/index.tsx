@@ -8,7 +8,18 @@ import viewIconImg from '../../assets/view-icon.svg';
 import './styles.scss';
 import { useState } from 'react';
 
-export function Grade() {
+type GradeProps = {
+	isAdmin?: boolean;
+	grade?: Array<{
+		gradeName?: string;
+		front?: Array<{
+			frontName?: string;
+			chapterName?: string;
+		}>;
+	}>;
+};
+
+export function Grade(props: GradeProps) {
 	const [activeInput, setActiveInput] = useState(false);
 	const [frontName, setFrontName] = useState('Front A');
 
@@ -22,9 +33,14 @@ export function Grade() {
 		<div className='grade-container'>
 			<div className='title'>
 				<h2>1 Série</h2>
-				<button>
-					<img src={historyIconImg} alt='botão de histórico' />
-				</button>
+
+				{props.isAdmin ? (
+					<button>
+						<img src={historyIconImg} alt='botão de histórico' />
+					</button>
+				) : (
+					''
+				)}
 			</div>
 
 			<div className='front-content'>
@@ -54,15 +70,24 @@ export function Grade() {
 
 				<div className='chapter'>
 					<div className='chapter-info'>
-						<img src={moveIconImg} alt='Ícone para mover o capítulo de posição' />
+						{props.isAdmin ? (
+							<img src={moveIconImg} alt='Ícone para mover o capítulo de posição' />
+						) : (
+							''
+						)}
+
 						<div className='chapter-number'>1</div>
 						<span>Conjuntos</span>
 					</div>
 
 					<div className='btn-actions'>
-						<button>
-							<img src={eyeIconImg} alt='Mostrar/ocultar capitulo' />
-						</button>
+						{props.isAdmin ? (
+							<button>
+								<img src={eyeIconImg} alt='Mostrar/ocultar capitulo' />
+							</button>
+						) : (
+							''
+						)}
 
 						<button>
 							<img src={viewIconImg} alt='Visualizar capitulo' />

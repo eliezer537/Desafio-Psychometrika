@@ -74,6 +74,10 @@
 			padding: 8px;
 			border-radius: 4px;
 
+			&:not(:last-of-type) {
+				margin-bottom: 8px;
+			}
+
 			display: flex;
 			justify-content: space-between;
 			align-items: center;
@@ -81,6 +85,10 @@
 			.chapter-info {
 				display: flex;
 				gap: 10px;
+
+				img {
+					cursor: grab;
+				}
 
 				.chapter-number {
 					width: 20px;
