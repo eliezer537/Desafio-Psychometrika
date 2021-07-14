@@ -7,9 +7,41 @@
 
 	main {
 		width: 100%;
+		padding: 32px 60px;
+
 		display: grid;
 		grid-template-columns: repeat(2, 453px);
 		gap: 40px;
-		padding: 32px 60px;
+		place-content: center;
+	}
+
+	@media (max-width: 1000px) {
+		main {
+			grid-template-columns: repeat(2, 380px);
+		}
+	}
+
+	@media (max-width: 900px) {
+		main {
+			grid-template-columns: repeat(2, 320px);
+		}
+	}
+
+	@media (max-width: 780px) {
+		main {
+			grid-template-columns: repeat(2, 280px);
+		}
+	}
+
+	@media (max-width: 680px) {
+		main {
+			grid-template-columns: repeat(1, 400px);
+		}
+	}
+
+	@media (max-width: 480px) {
+		main {
+			grid-template-columns: repeat(1, 300px);
+		}
 	}
 }

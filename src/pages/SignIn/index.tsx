@@ -1,6 +1,6 @@
 import { FormEvent, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { auth } from '../../services/firebase';
+import { database } from '../../services/firebase';
 
 import toast, { Toaster } from 'react-hot-toast';
 
@@ -9,36 +9,68 @@ import eyeOffImg from '../../assets/eye-off.svg';
 
 import Particles from 'react-particles-js';
 import './styles.scss';
-import { useAuth } from '../../hooks/useAuth';
+
+type FirebaseUsers = Record<
+	string,
+	{
+		id: string;
+		email: string;
+		password: string;
+		type: string;
+	}
+>;
 
 export function SignIn() {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [showPassword, setShowPassword] = useState(false);
-	const { setUser } = useAuth();
 	const history = useHistory();
 
 	function showOrHidePassword() {
 		setShowPassword(!showPassword);
 	}
 
-	async function handleSignIn(event: FormEvent) {
+	function handleSignIn(event: FormEvent) {
 		event.preventDefault();
-
 		if (email.trim() === '' || password.trim() === '') {
 			return;
 		}
 
-		try {
-			const data = await auth.signInWithEmailAndPassword(email, password);
-			const id = data.user?.uid;
+		const userRef = database.ref('users');
 
-			setUser(id);
-			history.push('/admin/home');
-		} catch (err) {
-			toast.error('Ops, usuário não existe!', { icon: '❗️' });
-			return;
-		}
+		userRef.once('value', user => {
+			const databaseUser = user.val();
+			const firebaseUsers: FirebaseUsers = databaseUser ?? {};
+
+			const parsedUsers = Object.entries(firebaseUsers).map(([key, value]) => {
+				return {
+					id: key,
+					email: value.email,
+					password: value.password,
+					type: value.type,
+				};
+			});
+
+			const dataUser = parsedUsers.find(item => {
+				return item.email === email && item.password === password;
+			});
+
+			if (!dataUser) {
+				toast.error('Ops, usuário não existe!', { icon: '❗️' });
+				return;
+			}
+
+			if (dataUser?.type === 'admin') {
+				history.push('/admin/home');
+
+				localStorage.setItem('id', dataUser.id);
+			}
+
+			if (dataUser?.type === 'student') {
+				history.push('/student/home');
+				localStorage.setItem('id', dataUser.id);
+			}
+		});
 	}
 
 	return (
@@ -87,6 +119,7 @@ export function SignIn() {
 						type='email'
 						placeholder='Seu email institucional'
 						onChange={event => setEmail(event.target.value)}
+						required
 					/>
 
 					<div>
@@ -95,6 +128,7 @@ export function SignIn() {
 							type={showPassword ? 'text' : 'password'}
 							placeholder='Mínimo de 8 caracteres'
 							onChange={event => setPassword(event.target.value)}
+							required
 						/>
 						<img
 							src={eyeOffImg}

@@ -10,11 +10,13 @@ import { useState } from 'react';
 
 type GradeProps = {
 	isAdmin?: boolean;
-	grade?: Array<{
+	grades?: Array<{
 		gradeName?: string;
-		front?: Array<{
+		fronts?: Array<{
 			frontName?: string;
-			chapterName?: string;
+			chapters?: Array<{
+				chapterName?: string;
+			}>;
 		}>;
 	}>;
 };

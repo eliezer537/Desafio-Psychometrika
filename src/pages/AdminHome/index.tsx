@@ -12,6 +12,8 @@ export function AdminHome() {
 
 			<main>
 				<Grade isAdmin />
+				<Grade isAdmin />
+				<Grade isAdmin />
 			</main>
 		</div>
 	);
