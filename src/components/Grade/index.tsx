@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { database } from '../../services/firebase';
 
@@ -37,33 +37,24 @@ export function Grade(props: GradeProps) {
 
 	const { schoolId } = useParams<paramsType>();
 
-	// useEffect(() => {
-	// 	console.log(activeInput);
-	// }, [activeInput]);
-
 	function handleOpenFrontName(obj: { id: string; name: string }) {
-		console.log(obj.id);
-		console.log(activeInput);
-
 		setActiveInput(obj.id);
-
 		setFrontName(obj.name);
-		console.log();
 	}
 
-	async function handleCloseFrontName(obj: { id: string; name: string }) {
-		setActiveInput('');
-		setFrontName(obj.name);
-		console.log(frontName);
-		// console.log('abriu');
-
-		//alterar o nome no banco
-
+	async function ChangeFrontName(frontId: string) {
 		await database
-			.ref(`schools/${schoolId}/grades/${props.gradeId}/fronts/${obj.id}`)
+			.ref(`schools/${schoolId}/grades/${props.gradeId}/fronts/${frontId}`)
 			.update({
 				name: frontName,
 			});
+	}
+
+	function handleCloseFrontName(obj: { id: string; name: string }) {
+		setActiveInput('');
+		setFrontName(obj.name);
+
+		ChangeFrontName(obj.id);
 	}
 
 	return (
@@ -81,7 +72,7 @@ export function Grade(props: GradeProps) {
 			</div>
 
 			<div className='front-content'>
-				{props.fronts?.map((front, index) => {
+				{props.fronts?.map(front => {
 					return (
 						<div className='each-front' key={front.id}>
 							{activeInput === front.id ? (
@@ -94,7 +85,7 @@ export function Grade(props: GradeProps) {
 									<img
 										src={changeIconImg}
 										alt='ícone para alterar o nome da frente'
-										title='fdf'
+										title='Alterar nome'
 										onClick={() =>
 											handleCloseFrontName({ id: front.id, name: front.frontName })
 										}
@@ -102,11 +93,11 @@ export function Grade(props: GradeProps) {
 								</div>
 							) : (
 								<div className='title'>
-									<span>{activeInput === front.id ? frontName : front.frontName}</span>
+									<span>{front.frontName}</span>
 									<img
 										src={editIconImg}
 										alt='ícone para editar'
-										title='aqui abre'
+										title='Editar nome'
 										onClick={() =>
 											handleOpenFrontName({ id: front.id, name: front.frontName })
 										}
@@ -114,32 +105,39 @@ export function Grade(props: GradeProps) {
 								</div>
 							)}
 
-							<div className='chapter'>
-								<div className='chapter-info'>
-									{props.isAdmin ? (
-										<img src={moveIconImg} alt='Ícone para mover o capítulo de posição' />
-									) : (
-										''
-									)}
+							{front.chapters.map((chapter, index) => {
+								return (
+									<div className='chapter' key={chapter.url}>
+										<div className='chapter-info'>
+											{props.isAdmin ? (
+												<img
+													src={moveIconImg}
+													alt='Ícone para mover o capítulo de posição'
+												/>
+											) : (
+												''
+											)}
 
-									<div className='chapter-number'>{index + 1}</div>
-									<span>Conjuntos</span>
-								</div>
+											<div className='chapter-number'>{index + 1}</div>
+											<span>{chapter.title}</span>
+										</div>
 
-								<div className='btn-actions'>
-									{props.isAdmin ? (
-										<button>
-											<img src={eyeIconImg} alt='Mostrar/ocultar capitulo' />
-										</button>
-									) : (
-										''
-									)}
+										<div className='btn-actions'>
+											{props.isAdmin ? (
+												<button>
+													<img src={eyeIconImg} alt='Mostrar/ocultar capitulo' />
+												</button>
+											) : (
+												''
+											)}
 
-									<button>
-										<img src={viewIconImg} alt='Visualizar capitulo' />
-									</button>
-								</div>
-							</div>
+											<button>
+												<img src={viewIconImg} alt='Visualizar capitulo' />
+											</button>
+										</div>
+									</div>
+								);
+							})}
 						</div>
 					);
 				})}
