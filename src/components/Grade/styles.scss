@@ -40,87 +40,96 @@
 		border-radius: 8px;
 		box-shadow: 0 2px 4px 0px var(--shadow);
 
-		.title {
-			max-width: 98%;
-
-			input {
-				width: 150px;
-				max-width: 200px;
-				border: 0;
-
-				font-size: 1.375rem;
-				color: var(--secondary-text-color);
-				font-weight: 600;
-				letter-spacing: 0.3px;
-			}
-
-			img {
-				margin: 0 5px;
-				cursor: pointer;
-			}
-
-			span {
-				font-size: 1.375rem;
-				color: var(--secondary-text-color);
-				font-weight: 600;
-				letter-spacing: 0.3px;
-			}
-		}
-
-		.chapter {
+		.each-front {
 			width: 100%;
-			height: 48px;
-			background-color: var(--tertiary-color);
-			padding: 8px;
-			border-radius: 4px;
+			background-color: transparent;
 
-			&:not(:last-of-type) {
-				margin-bottom: 8px;
+			&:not(:first-child) {
+				margin-top: 32px;
 			}
 
-			display: flex;
-			justify-content: space-between;
-			align-items: center;
+			.title {
+				max-width: 98%;
 
-			.chapter-info {
-				display: flex;
-				gap: 10px;
+				input {
+					width: 150px;
+					max-width: 200px;
+					border: 0;
 
-				img {
-					cursor: grab;
+					font-size: 1.375rem;
+					color: var(--secondary-text-color);
+					font-weight: 600;
+					letter-spacing: 0.3px;
 				}
 
-				.chapter-number {
-					width: 20px;
-					height: 20px;
-					border-radius: 50%;
-					border: 1px solid var(--secondary-icon-color);
-					background-color: transparent;
-
-					@extend .flex-center;
+				img {
+					margin: 0 5px;
+					cursor: pointer;
 				}
 
 				span {
-					font-size: 1rem;
-					font-weight: 600;
+					font-size: 1.375rem;
 					color: var(--secondary-text-color);
+					font-weight: 600;
 					letter-spacing: 0.3px;
 				}
 			}
 
-			.btn-actions {
+			.chapter {
+				width: 100%;
+				height: 48px;
+				background-color: var(--tertiary-color);
+				padding: 8px;
+				border-radius: 4px;
+
+				&:not(:last-of-type) {
+					margin-bottom: 8px;
+				}
+
 				display: flex;
-				gap: 4px;
+				justify-content: space-between;
+				align-items: center;
 
-				button {
-					width: 32px;
-					height: 32px;
-					border: 0;
-					border-radius: 50%;
-					background-color: var(--secondary-color);
-					cursor: pointer;
+				.chapter-info {
+					display: flex;
+					gap: 10px;
 
-					@extend .flex-center;
+					img {
+						cursor: grab;
+					}
+
+					.chapter-number {
+						width: 20px;
+						height: 20px;
+						border-radius: 50%;
+						border: 1px solid var(--secondary-icon-color);
+						background-color: transparent;
+
+						@extend .flex-center;
+					}
+
+					span {
+						font-size: 1rem;
+						font-weight: 600;
+						color: var(--secondary-text-color);
+						letter-spacing: 0.3px;
+					}
+				}
+
+				.btn-actions {
+					display: flex;
+					gap: 4px;
+
+					button {
+						width: 32px;
+						height: 32px;
+						border: 0;
+						border-radius: 50%;
+						background-color: var(--secondary-color);
+						cursor: pointer;
+
+						@extend .flex-center;
+					}
 				}
 			}
 		}

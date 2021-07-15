@@ -16,7 +16,7 @@ type paramsType = {
 
 type SchoolTypes = Array<{
 	id: string;
-	gradleName: string;
+	gradeName: string;
 	fronts: {
 		id: string;
 		frontName: string;
@@ -35,7 +35,7 @@ export function StudentHome() {
 	useEffect(() => {
 		const schoolRef = database.ref(`schools/${schoolId}`);
 
-		schoolRef.once('value', school => {
+		schoolRef.on('value', school => {
 			const databaseSchool = school.val();
 			setSchoolName(school.val().name);
 
@@ -50,8 +50,13 @@ export function StudentHome() {
 			<SubHeader title={`${schoolName}`} />
 
 			<main>
-				{gradeArray?.map(gradle => (
-					<Grade key={gradle.id} grades={gradeArray} />
+				{gradeArray?.map(grade => (
+					<Grade
+						key={grade.id}
+						fronts={grade.fronts}
+						name={grade.gradeName}
+						gradeId={grade.id}
+					/>
 				))}
 			</main>
 		</div>

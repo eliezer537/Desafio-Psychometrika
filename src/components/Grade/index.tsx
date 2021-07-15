@@ -1,3 +1,7 @@
+import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { database } from '../../services/firebase';
+
 import historyIconImg from '../../assets/history-icon.svg';
 import editIconImg from '../../assets/edit-icon.svg';
 import changeIconImg from '../../assets/change-icon.svg';
@@ -6,40 +10,66 @@ import eyeIconImg from '../../assets/eye-icon.svg';
 import viewIconImg from '../../assets/view-icon.svg';
 
 import './styles.scss';
-import { useState } from 'react';
+
+type paramsType = {
+	schoolId: string;
+};
+
+type SchoolTypes = {
+	id: string;
+	frontName: string;
+	chapters: {
+		title: string;
+		url: string;
+	}[];
+}[];
 
 type GradeProps = {
 	isAdmin?: boolean;
-	grades?: SchoolTypes;
+	fronts: SchoolTypes;
+	name: string;
+	gradeId: string;
 };
 
-type SchoolTypes = Array<{
-	id: string;
-	gradleName: string;
-	fronts: {
-		id: string;
-		frontName: string;
-		chapters: {
-			title: string;
-			url: string;
-		}[];
-	}[];
-}>;
-
 export function Grade(props: GradeProps) {
-	const [activeInput, setActiveInput] = useState(false);
-	const [frontName, setFrontName] = useState('Front A');
+	const [activeInput, setActiveInput] = useState('');
+	const [frontName, setFrontName] = useState('');
 
-	function handleFrontNameChange() {
-		setActiveInput(!activeInput);
+	const { schoolId } = useParams<paramsType>();
+
+	// useEffect(() => {
+	// 	console.log(activeInput);
+	// }, [activeInput]);
+
+	function handleOpenFrontName(obj: { id: string; name: string }) {
+		console.log(obj.id);
+		console.log(activeInput);
+
+		setActiveInput(obj.id);
+
+		setFrontName(obj.name);
+		console.log();
+	}
+
+	async function handleCloseFrontName(obj: { id: string; name: string }) {
+		setActiveInput('');
+		setFrontName(obj.name);
+		console.log(frontName);
+		// console.log('abriu');
 
 		//alterar o nome no banco
+
+		await database
+			.ref(`schools/${schoolId}/grades/${props.gradeId}/fronts/${obj.id}`)
+			.update({
+				name: frontName,
+			});
 	}
 
 	return (
 		<div className='grade-container'>
 			<div className='title'>
-				<h2>1 Série</h2>
+				<h2>{props.name}</h2>
 
 				{props.isAdmin ? (
 					<button>
@@ -51,56 +81,68 @@ export function Grade(props: GradeProps) {
 			</div>
 
 			<div className='front-content'>
-				{activeInput ? (
-					<div className='title'>
-						<input
-							type='text'
-							value={frontName}
-							onChange={event => setFrontName(event.target.value)}
-						/>
-						<img
-							src={changeIconImg}
-							alt='ícone para alterar o nome da frente'
-							onClick={handleFrontNameChange}
-						/>
-					</div>
-				) : (
-					<div className='title'>
-						<span>{frontName}</span>
-						<img
-							src={editIconImg}
-							alt='ícone para editar'
-							onClick={handleFrontNameChange}
-						/>
-					</div>
-				)}
+				{props.fronts?.map((front, index) => {
+					return (
+						<div className='each-front' key={front.id}>
+							{activeInput === front.id ? (
+								<div className='title'>
+									<input
+										type='text'
+										value={frontName}
+										onChange={event => setFrontName(event.target.value)}
+									/>
+									<img
+										src={changeIconImg}
+										alt='ícone para alterar o nome da frente'
+										title='fdf'
+										onClick={() =>
+											handleCloseFrontName({ id: front.id, name: front.frontName })
+										}
+									/>
+								</div>
+							) : (
+								<div className='title'>
+									<span>{activeInput === front.id ? frontName : front.frontName}</span>
+									<img
+										src={editIconImg}
+										alt='ícone para editar'
+										title='aqui abre'
+										onClick={() =>
+											handleOpenFrontName({ id: front.id, name: front.frontName })
+										}
+									/>
+								</div>
+							)}
 
-				<div className='chapter'>
-					<div className='chapter-info'>
-						{props.isAdmin ? (
-							<img src={moveIconImg} alt='Ícone para mover o capítulo de posição' />
-						) : (
-							''
-						)}
+							<div className='chapter'>
+								<div className='chapter-info'>
+									{props.isAdmin ? (
+										<img src={moveIconImg} alt='Ícone para mover o capítulo de posição' />
+									) : (
+										''
+									)}
 
-						<div className='chapter-number'>1</div>
-						<span>Conjuntos</span>
-					</div>
+									<div className='chapter-number'>{index + 1}</div>
+									<span>Conjuntos</span>
+								</div>
 
-					<div className='btn-actions'>
-						{props.isAdmin ? (
-							<button>
-								<img src={eyeIconImg} alt='Mostrar/ocultar capitulo' />
-							</button>
-						) : (
-							''
-						)}
+								<div className='btn-actions'>
+									{props.isAdmin ? (
+										<button>
+											<img src={eyeIconImg} alt='Mostrar/ocultar capitulo' />
+										</button>
+									) : (
+										''
+									)}
 
-						<button>
-							<img src={viewIconImg} alt='Visualizar capitulo' />
-						</button>
-					</div>
-				</div>
+									<button>
+										<img src={viewIconImg} alt='Visualizar capitulo' />
+									</button>
+								</div>
+							</div>
+						</div>
+					);
+				})}
 			</div>
 		</div>
 	);

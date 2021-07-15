@@ -21,7 +21,7 @@ export function TransformGradeObjectIntoJSON(db: any) {
 	const mapData = parsedData.map(([key, value]) => {
 		return {
 			id: key,
-			gradleName: value.name,
+			gradeName: value.name,
 			fronts: Object.entries(value.fronts).map(([key, value]) => {
 				return {
 					id: key,
