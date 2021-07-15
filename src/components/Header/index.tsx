@@ -1,11 +1,15 @@
 import { FormEvent, useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 
 import logoImg from '../../assets/logo.svg';
 import downArrowImg from '../../assets/down-arrow.svg';
 
 import './styles.scss';
 import { database } from '../../services/firebase';
+
+type paramsType = {
+	schoolId: string;
+};
 
 type HeaderProps = {
 	initialLetter: string;
@@ -62,6 +66,7 @@ function Dropdown() {
 	const history = useHistory();
 	const { id, type } = dataUser;
 	const [userType, setUserType] = useState(type);
+	const { schoolId } = useParams<paramsType>();
 
 	function handleLogout() {
 		history.push('/');
@@ -74,7 +79,7 @@ function Dropdown() {
 			type: userType,
 		});
 
-		history.push(`/${userType}/home`);
+		history.push(`/${userType}/home/${schoolId}`);
 	}
 
 	return (
