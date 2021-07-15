@@ -12,8 +12,8 @@ function App() {
 			<AuthContextProvider>
 				<Switch>
 					<Route path='/' exact component={SignIn} />
-					<Route path='/admin/home' exact component={AdminHome} />
-					<Route path='/student/home' exact component={StudentHome} />
+					<Route path='/admin/home/:schoolId' exact component={AdminHome} />
+					<Route path='/student/home/:schoolId' exact component={StudentHome} />
 				</Switch>
 			</AuthContextProvider>
 		</BrowserRouter>

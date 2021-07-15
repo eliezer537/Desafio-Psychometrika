@@ -16,6 +16,7 @@ type FirebaseUsers = {
 	email: string;
 	password: string;
 	type: string;
+	schoolId: string;
 };
 
 let dataUser: FirebaseUsers;

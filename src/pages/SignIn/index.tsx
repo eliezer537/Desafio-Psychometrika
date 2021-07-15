@@ -17,6 +17,7 @@ type FirebaseUsers = Record<
 		email: string;
 		password: string;
 		type: string;
+		schoolId: string;
 	}
 >;
 
@@ -48,6 +49,7 @@ export function SignIn() {
 					email: value.email,
 					password: value.password,
 					type: value.type,
+					schoolId: value.schoolId,
 				};
 			});
 
@@ -61,13 +63,13 @@ export function SignIn() {
 			}
 
 			if (dataUser?.type === 'admin') {
-				history.push('/admin/home');
+				history.push(`/admin/home/${dataUser.schoolId}`);
 
 				localStorage.setItem('id', dataUser.id);
 			}
 
 			if (dataUser?.type === 'student') {
-				history.push('/student/home');
+				history.push(`/student/home/${dataUser.schoolId}`);
 				localStorage.setItem('id', dataUser.id);
 			}
 		});

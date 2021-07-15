@@ -10,16 +10,21 @@ import { useState } from 'react';
 
 type GradeProps = {
 	isAdmin?: boolean;
-	grades?: Array<{
-		gradeName?: string;
-		fronts?: Array<{
-			frontName?: string;
-			chapters?: Array<{
-				chapterName?: string;
-			}>;
-		}>;
-	}>;
+	grades?: SchoolTypes;
 };
+
+type SchoolTypes = Array<{
+	id: string;
+	gradleName: string;
+	fronts: {
+		id: string;
+		frontName: string;
+		chapters: {
+			title: string;
+			url: string;
+		}[];
+	}[];
+}>;
 
 export function Grade(props: GradeProps) {
 	const [activeInput, setActiveInput] = useState(false);
