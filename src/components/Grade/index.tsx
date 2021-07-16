@@ -110,7 +110,14 @@ export function Grade(props: GradeProps) {
 							)}
 
 							{front.chapters.map((chapter, index) => {
-								function handleWithShowOrHideChapters(id: string) {
+								function handleWithShowChapters(id: string) {
+									if (id === chapter.id) {
+										selectedChapter.splice(selectedChapter.indexOf(id), 1);
+										setSelectedChapter([...selectedChapter]);
+									}
+								}
+
+								function handleWithHideChapters(id: string) {
 									setClicked(id);
 
 									if (id === chapter.id) {
@@ -143,11 +150,19 @@ export function Grade(props: GradeProps) {
 											{props.isAdmin ? (
 												<>
 													{selectedChapter.includes(chapter.id) ? (
-														<button title='este'>
+														<button
+															title='Mostrar capítulo'
+															onClick={() => {
+																handleWithShowChapters(chapter.id);
+															}}
+														>
 															<img src={hideIconImg} alt='Mostrar/ocultar capitulo' />
 														</button>
 													) : (
-														<button onClick={() => handleWithShowOrHideChapters(chapter.id)}>
+														<button
+															title='Ocultar capítulo'
+															onClick={() => handleWithHideChapters(chapter.id)}
+														>
 															<img src={eyeIconImg} alt='Mostrar/ocultar capitulo' />
 														</button>
 													)}
