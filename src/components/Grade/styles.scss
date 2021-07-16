@@ -85,6 +85,7 @@
 
 				&.hide {
 					background-color: rgba(0, 0, 0, 0.32);
+					text-decoration: line-through;
 				}
 
 				&:not(:last-of-type) {

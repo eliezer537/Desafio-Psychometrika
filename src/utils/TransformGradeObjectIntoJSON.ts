@@ -7,6 +7,7 @@ type FirebaseGradeDataTypes = Record<
 			chapters: {
 				title: string;
 				url: string;
+				isVisible: boolean;
 			}[];
 		}[];
 	}
@@ -29,6 +30,7 @@ export function TransformGradeObjectIntoJSON(db: any) {
 							id: key,
 							title: value.title,
 							url: value.url,
+							isVisible: value.isVisible,
 						};
 					}),
 				};

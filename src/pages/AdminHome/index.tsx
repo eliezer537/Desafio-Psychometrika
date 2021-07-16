@@ -24,6 +24,7 @@ type SchoolTypes = Array<{
 			id: string;
 			title: string;
 			url: string;
+			isVisible: boolean;
 		}[];
 	}[];
 }>;

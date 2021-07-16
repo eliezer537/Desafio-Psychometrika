@@ -23,6 +23,7 @@ type SchoolTypes = {
 		id: string;
 		title: string;
 		url: string;
+		isVisible: boolean;
 	}[];
 }[];
 
@@ -33,10 +34,15 @@ type GradeProps = {
 	gradeId: string;
 };
 
+type updateChapterStatusTypes = {
+	status: boolean;
+	frontId: string | undefined;
+	chapterId: string | undefined;
+};
+
 export function Grade(props: GradeProps) {
 	const [activeInput, setActiveInput] = useState('');
 	const [frontName, setFrontName] = useState('');
-	const [selectedChapter, setSelectedChapter] = useState([] as string[]);
 
 	const { schoolId } = useParams<paramsType>();
 
@@ -45,6 +51,20 @@ export function Grade(props: GradeProps) {
 			.ref(`schools/${schoolId}/grades/${props.gradeId}/fronts/${frontId}`)
 			.update({
 				name: frontName,
+			});
+	}
+
+	async function updateChapterStatus({
+		status,
+		frontId,
+		chapterId,
+	}: updateChapterStatusTypes) {
+		await database
+			.ref(
+				`schools/${schoolId}/grades/${props.gradeId}/fronts/${frontId}/chapters/${chapterId}`
+			)
+			.update({
+				isVisible: status,
 			});
 	}
 
@@ -60,12 +80,7 @@ export function Grade(props: GradeProps) {
 		ChangeFrontName(obj.id);
 	}
 
-	function handleWithResetDefaults() {
-		while (selectedChapter.length) {
-			selectedChapter.pop();
-		}
-		setSelectedChapter([...selectedChapter]);
-	}
+	function handleWithResetDefaults() {}
 
 	return (
 		<div className='grade-container'>
@@ -116,67 +131,77 @@ export function Grade(props: GradeProps) {
 							)}
 
 							{front.chapters.map((chapter, index) => {
-								function handleWithShowChapters(id: string) {
-									selectedChapter.splice(selectedChapter.indexOf(id), 1);
-									setSelectedChapter([...selectedChapter]);
+								function HandleWithShowOrHideChapters(status: boolean) {
+									updateChapterStatus({
+										status,
+										frontId: front.id,
+										chapterId: chapter.id,
+									});
 								}
 
-								function handleWithHideChapters(id: string) {
-									setSelectedChapter([...selectedChapter, id]);
+								if (
+									(props.isAdmin && chapter.isVisible === false) ||
+									chapter.isVisible
+								) {
+									return (
+										<div
+											className={`chapter ${
+												props.isAdmin && !chapter.isVisible && 'hide'
+											}`}
+											key={chapter.url}
+										>
+											<div className='chapter-info'>
+												{props.isAdmin ? (
+													<img
+														src={moveIconImg}
+														alt='Ícone para mover o capítulo de posição'
+													/>
+												) : (
+													''
+												)}
+
+												{chapter.isVisible ? (
+													<div className='chapter-number'>{index + 1}</div>
+												) : (
+													<div className='chapter-number'></div>
+												)}
+												<span>{chapter.title}</span>
+											</div>
+
+											<div className='btn-actions'>
+												{props.isAdmin ? (
+													<>
+														{!chapter.isVisible ? (
+															<button
+																title='Mostrar capítulo'
+																onClick={() => HandleWithShowOrHideChapters(true)}
+															>
+																<img src={hideIconImg} alt='Mostrar/ocultar capitulo' />
+															</button>
+														) : (
+															<button
+																title='Ocultar capítulo'
+																onClick={() => HandleWithShowOrHideChapters(false)}
+															>
+																<img src={eyeIconImg} alt='Mostrar/ocultar capitulo' />
+															</button>
+														)}
+													</>
+												) : (
+													''
+												)}
+
+												<a href={chapter.url} target='_blank' rel='noreferrer'>
+													<button>
+														<img src={viewIconImg} alt='Visualizar capitulo' />
+													</button>
+												</a>
+											</div>
+										</div>
+									);
+								} else {
+									return '';
 								}
-
-								return (
-									<div
-										className={`chapter ${
-											selectedChapter.includes(chapter.id) ? 'hide' : ''
-										}`}
-										key={chapter.url}
-									>
-										<div className='chapter-info'>
-											{props.isAdmin ? (
-												<img
-													src={moveIconImg}
-													alt='Ícone para mover o capítulo de posição'
-												/>
-											) : (
-												''
-											)}
-
-											<div className='chapter-number'>{index + 1}</div>
-											<span>{chapter.title}</span>
-										</div>
-
-										<div className='btn-actions'>
-											{props.isAdmin ? (
-												<>
-													{selectedChapter.includes(chapter.id) ? (
-														<button
-															title='Mostrar capítulo'
-															onClick={() => {
-																handleWithShowChapters(chapter.id);
-															}}
-														>
-															<img src={hideIconImg} alt='Mostrar/ocultar capitulo' />
-														</button>
-													) : (
-														<button
-															title='Ocultar capítulo'
-															onClick={() => handleWithHideChapters(chapter.id)}
-														>
-															<img src={eyeIconImg} alt='Mostrar/ocultar capitulo' />
-														</button>
-													)}
-												</>
-											) : (
-												''
-											)}
-
-											<button>
-												<img src={viewIconImg} alt='Visualizar capitulo' />
-											</button>
-										</div>
-									</div>
-								);
 							})}
 						</div>
 					);
