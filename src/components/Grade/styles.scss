@@ -81,6 +81,11 @@
 				background-color: var(--tertiary-color);
 				padding: 8px;
 				border-radius: 4px;
+				transition: background 0.2s ease;
+
+				&.hide {
+					background-color: rgba(0, 0, 0, 0.32);
+				}
 
 				&:not(:last-of-type) {
 					margin-bottom: 8px;

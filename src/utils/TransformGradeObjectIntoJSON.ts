@@ -1,10 +1,8 @@
 type FirebaseGradeDataTypes = Record<
 	string,
 	{
-		id: string;
 		name: string;
 		fronts: {
-			id: string;
 			name: string;
 			chapters: {
 				title: string;
@@ -28,6 +26,7 @@ export function TransformGradeObjectIntoJSON(db: any) {
 					frontName: value.name,
 					chapters: Object.entries(value.chapters).map(([key, value]) => {
 						return {
+							id: key,
 							title: value.title,
 							url: value.url,
 						};

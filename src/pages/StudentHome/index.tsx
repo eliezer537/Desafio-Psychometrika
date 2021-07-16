@@ -21,6 +21,7 @@ type SchoolTypes = Array<{
 		id: string;
 		frontName: string;
 		chapters: {
+			id: string;
 			title: string;
 			url: string;
 		}[];

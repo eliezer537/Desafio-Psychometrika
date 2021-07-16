@@ -8,6 +8,7 @@ import changeIconImg from '../../assets/change-icon.svg';
 import moveIconImg from '../../assets/move-icon.svg';
 import eyeIconImg from '../../assets/eye-icon.svg';
 import viewIconImg from '../../assets/view-icon.svg';
+import hideIconImg from '../../assets/hide-icon.svg';
 
 import './styles.scss';
 
@@ -19,6 +20,7 @@ type SchoolTypes = {
 	id: string;
 	frontName: string;
 	chapters: {
+		id: string;
 		title: string;
 		url: string;
 	}[];
@@ -34,13 +36,10 @@ type GradeProps = {
 export function Grade(props: GradeProps) {
 	const [activeInput, setActiveInput] = useState('');
 	const [frontName, setFrontName] = useState('');
+	const [selectedChapter, setSelectedChapter] = useState([] as string[]);
+	const [clicked, setClicked] = useState('');
 
 	const { schoolId } = useParams<paramsType>();
-
-	function handleOpenFrontName(obj: { id: string; name: string }) {
-		setActiveInput(obj.id);
-		setFrontName(obj.name);
-	}
 
 	async function ChangeFrontName(frontId: string) {
 		await database
@@ -48,6 +47,11 @@ export function Grade(props: GradeProps) {
 			.update({
 				name: frontName,
 			});
+	}
+
+	function handleOpenFrontName(obj: { id: string; name: string }) {
+		setActiveInput(obj.id);
+		setFrontName(obj.name);
 	}
 
 	function handleCloseFrontName(obj: { id: string; name: string }) {
@@ -106,8 +110,21 @@ export function Grade(props: GradeProps) {
 							)}
 
 							{front.chapters.map((chapter, index) => {
+								function handleWithShowOrHideChapters(id: string) {
+									setClicked(id);
+
+									if (id === chapter.id) {
+										setSelectedChapter([...selectedChapter, chapter.id]);
+									}
+								}
+
 								return (
-									<div className='chapter' key={chapter.url}>
+									<div
+										className={`chapter ${
+											selectedChapter.includes(chapter.id) ? 'hide' : ''
+										}`}
+										key={chapter.url}
+									>
 										<div className='chapter-info'>
 											{props.isAdmin ? (
 												<img
@@ -124,9 +141,17 @@ export function Grade(props: GradeProps) {
 
 										<div className='btn-actions'>
 											{props.isAdmin ? (
-												<button>
-													<img src={eyeIconImg} alt='Mostrar/ocultar capitulo' />
-												</button>
+												<>
+													{selectedChapter.includes(chapter.id) ? (
+														<button title='este'>
+															<img src={hideIconImg} alt='Mostrar/ocultar capitulo' />
+														</button>
+													) : (
+														<button onClick={() => handleWithShowOrHideChapters(chapter.id)}>
+															<img src={eyeIconImg} alt='Mostrar/ocultar capitulo' />
+														</button>
+													)}
+												</>
 											) : (
 												''
 											)}
