@@ -37,7 +37,6 @@ export function Grade(props: GradeProps) {
 	const [activeInput, setActiveInput] = useState('');
 	const [frontName, setFrontName] = useState('');
 	const [selectedChapter, setSelectedChapter] = useState([] as string[]);
-	const [clicked, setClicked] = useState('');
 
 	const { schoolId } = useParams<paramsType>();
 
@@ -61,14 +60,21 @@ export function Grade(props: GradeProps) {
 		ChangeFrontName(obj.id);
 	}
 
+	function handleWithResetDefaults() {
+		while (selectedChapter.length) {
+			selectedChapter.pop();
+		}
+		setSelectedChapter([...selectedChapter]);
+	}
+
 	return (
 		<div className='grade-container'>
 			<div className='title'>
 				<h2>{props.name}</h2>
 
 				{props.isAdmin ? (
-					<button>
-						<img src={historyIconImg} alt='botão de histórico' />
+					<button onClick={handleWithResetDefaults}>
+						<img src={historyIconImg} alt='botão de reset' />
 					</button>
 				) : (
 					''
@@ -111,18 +117,12 @@ export function Grade(props: GradeProps) {
 
 							{front.chapters.map((chapter, index) => {
 								function handleWithShowChapters(id: string) {
-									if (id === chapter.id) {
-										selectedChapter.splice(selectedChapter.indexOf(id), 1);
-										setSelectedChapter([...selectedChapter]);
-									}
+									selectedChapter.splice(selectedChapter.indexOf(id), 1);
+									setSelectedChapter([...selectedChapter]);
 								}
 
 								function handleWithHideChapters(id: string) {
-									setClicked(id);
-
-									if (id === chapter.id) {
-										setSelectedChapter([...selectedChapter, chapter.id]);
-									}
+									setSelectedChapter([...selectedChapter, id]);
 								}
 
 								return (
