@@ -43,7 +43,6 @@ type updateChapterStatusTypes = {
 export function Grade(props: GradeProps) {
 	const [activeInput, setActiveInput] = useState('');
 	const [frontName, setFrontName] = useState('');
-
 	const { schoolId } = useParams<paramsType>();
 
 	async function ChangeFrontName(frontId: string) {
@@ -80,7 +79,31 @@ export function Grade(props: GradeProps) {
 		ChangeFrontName(obj.id);
 	}
 
-	function handleWithResetDefaults() {}
+	function handleWithResetDefaults() {
+		const justInvisible = props.fronts.map(front => {
+			const chapterList = front.chapters.map(chapter => {
+				if (!chapter.isVisible) {
+					return {
+						frontId: front.id,
+						chapterId: chapter.id,
+					};
+				}
+			});
+			const removeUndefinedFields = chapterList.filter(item => item);
+
+			return removeUndefinedFields;
+		});
+
+		justInvisible.map(front =>
+			front.map(chapter => {
+				updateChapterStatus({
+					status: true,
+					frontId: chapter?.frontId,
+					chapterId: chapter?.chapterId,
+				});
+			})
+		);
+	}
 
 	return (
 		<div className='grade-container'>
