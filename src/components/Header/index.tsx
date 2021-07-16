@@ -34,8 +34,13 @@ export function Header({ initialLetter }: HeaderProps) {
 		const userRef = database.ref(`users/${userId}`);
 
 		userRef.once('value', user => {
-			dataUser = user.val();
-			dataUser.id = user.key!;
+			localStorage.setItem(
+				'user',
+				JSON.stringify({ ...user.val(), id: user.key })
+			);
+
+			// dataUser = user.val();
+			// dataUser.id = user.key!;
 		});
 	}, []);
 
@@ -64,12 +69,17 @@ export function Header({ initialLetter }: HeaderProps) {
 
 function Dropdown() {
 	const history = useHistory();
+	const dataUser: FirebaseUsers = JSON.parse(
+		localStorage.getItem('user') as any
+	);
+
 	const { id, type } = dataUser;
 	const [userType, setUserType] = useState(type);
 	const { schoolId } = useParams<paramsType>();
 
 	function handleLogout() {
 		history.push('/');
+		localStorage.clear();
 	}
 
 	async function handleUserTypeChange(event: FormEvent) {
