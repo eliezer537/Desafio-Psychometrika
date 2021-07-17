@@ -15,12 +15,12 @@ Desafio Psychometrika
 <h1></h1>
 
 <h1>
-  <img src='./assets-readme/signin-page.png' >
+  <img src='./assets-readme/admin-page.png' >
 </h1>
 
 <h3>Mais imagens do projeto:</h3>
 
-- [Admin Page](./assets-readme/admin-page.png)
+- [SignIn Page](./assets-readme/signin-page.png)
 - [Student Page](./assets-readme/student-page.png)
 
 ## 📃 Sobre
