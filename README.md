@@ -14,6 +14,7 @@ Desafio Psychometrika
 
 <h1></h1>
 
+- Visão principal do projeto
 <h1>
   <img src='./assets-readme/admin-page.png' >
 </h1>
