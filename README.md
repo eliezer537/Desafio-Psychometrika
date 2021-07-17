@@ -1,46 +1,61 @@
-# Getting Started with Create React App
+<h1>
+Desafio Psychometrika
+</h1>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## 💻 Como acessar o projeto
 
-## Available Scripts
+### Clique [aqui](https://psychometrika-29e1f.web.app/) para acessar a aplicação.
+###  Admin:
+- Email: ``admin@psychometrika.com.br``
+- Senha: ``hash123``
+### Aluno:
+- Email ``aluno@psychometrika.com.br``
+- Senha: ``hash987``
 
-In the project directory, you can run:
+<h1></h1>
 
-### `yarn start`
+<h1>
+  <img src='./assets-readme/signin-page.png' >
+</h1>
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+<h3>Mais imagens do projeto:</h3>
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+- [Admin Page](./assets-readme/admin-page.png)
+- [Student Page](./assets-readme/student-page.png)
 
-### `yarn test`
+## 📃 Sobre
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+O projeto/desafio foi requisitado no processo seletivo da **Psychometrika**. A aplicação foi feita em **ReactJS** e tem como objetivo criar um ambiente de estudo, onde o administrador do sistema define quais livros capítulo do livro está disponível para o aluno e qual a sua ordem.
 
-### `yarn build`
+## 🚀 Tecnologias utilizadas
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+O projeto foi desenvolvido utilizando as seguintes tecnologias:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- [ReactJS](https://reactjs.org/)
+- [SCSS](https://sass-lang.com/)
+- [Typescript](https://www.typescriptlang.org/)
+- [React Hot Toast](https://react-hot-toast.com/) Biblioteca de notificações.
+</p>
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## 📥 Como baixar a aplicação
 
-### `yarn eject`
+```bash
+git clone https://github.com/eliezer537/Desafio-Psychometrika.git
+cd Desafio-Psychometrika
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## 📌 Configuração da aplicação
+- Todas as configurações de banco de dados já estão incluidas na aplicação, assim como variáveis de ambiente. As variáveis de ambiente estarão disponíveis estritamente até o projeto ser checado pela **Psychometrika** e o processo seletivo ser finalizado.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## 📦 Para instalar as dependências
+```bash
+yarn install
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## 🖱️ Para executar a aplicação
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+```bash
+yarn start
+```
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+Caso não tenha o **yarn** instalado em seu computador, você poderá acessar o [Guia de instalação](https://classic.yarnpkg.com/en/docs/install/#debian-stable).
