@@ -27,6 +27,7 @@ Desafio Psychometrika
 ## 📃 Sobre
 
 O projeto/desafio foi requisitado no processo seletivo da **Psychometrika**. A aplicação foi feita em **ReactJS** e tem como objetivo criar um ambiente de estudo, onde o administrador do sistema define quais capítulos do livro estarão disponíveis para o aluno e qual a sua ordem.
+A aplicação é alimentada por um banco de dados **Realtime** do Firebase.
 
 ## 🚀 Tecnologias utilizadas
 
@@ -35,6 +36,7 @@ O projeto foi desenvolvido utilizando as seguintes tecnologias:
 - [ReactJS](https://reactjs.org/)
 - [SCSS](https://sass-lang.com/)
 - [Typescript](https://www.typescriptlang.org/)
+- [Firebase](https://firebase.google.com/)
 - [React Hot Toast](https://react-hot-toast.com/) Biblioteca de notificações.
 </p>
 
