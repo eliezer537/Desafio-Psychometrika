@@ -26,7 +26,7 @@ Desafio Psychometrika
 
 ## 📃 Sobre
 
-O projeto/desafio foi requisitado no processo seletivo da **Psychometrika**. A aplicação foi feita em **ReactJS** e tem como objetivo criar um ambiente de estudo, onde o administrador do sistema define quais capítulos do livro estarão disponíveis para o aluno e qual a sua ordem.
+O projeto/desafio foi requisitado no processo seletivo da **Psychometrika**. A aplicação foi feita em **ReactJS** e tem como objetivo criar um ambiente de estudo, onde o administrador do sistema define quais capítulos do livro estarão disponíveis para o aluno e qual a sua ordem.  
 A aplicação é alimentada por um banco de dados **Realtime** do Firebase.
 
 ## 🚀 Tecnologias utilizadas
